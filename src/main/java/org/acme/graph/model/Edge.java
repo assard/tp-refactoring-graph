@@ -23,8 +23,13 @@ public class Edge {
 	 */
 	private Vertex target;
 
-	public Edge() {
-
+	public Edge(Vertex source, Vertex target){
+		if(source == null || target == null) {
+			System.out.println("error : you can't set the source or target of an edge at null");
+			return;
+		}
+		this.source = source;
+		this.target = target;
 	}
 
 	public String getId() {
@@ -39,16 +44,8 @@ public class Edge {
 		return source;
 	}
 
-	public void setSource(Vertex source) {
-		this.source = source;
-	}
-
 	public Vertex getTarget() {
 		return target;
-	}
-
-	public void setTarget(Vertex target) {
-		this.target = target;
 	}
 
 	/**
