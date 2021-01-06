@@ -9,6 +9,7 @@ import java.util.List;
 import org.acme.graph.TestGraphFactory;
 import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
+import org.acme.graph.model.Path;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,31 +33,31 @@ public class DijkstraRegressTest {
 
 	@Test
 	public void testABFound() {
-		List<Edge> path = finder.findPath(graph.findVertex("a"), graph.findVertex("b"));
+		Path path = finder.findPath(graph.findVertex("a"), graph.findVertex("b"));
 		assertNotNull(path);
 		assertEquals(1, path.size());
 	}
 
 	@Test
 	public void testBANotFound() {
-		List<Edge> path = finder.findPath(graph.findVertex("b"), graph.findVertex("a"));
+		Path path = finder.findPath(graph.findVertex("b"), graph.findVertex("a"));
 		assertNull(path);
 	}
 
 	@Test
 	public void testACFoundWithCorrectOrder() {
-		List<Edge> path = finder.findPath(graph.findVertex("a"), graph.findVertex("c"));
+		Path path = finder.findPath(graph.findVertex("a"), graph.findVertex("c"));
 		assertNotNull(path);
 		assertEquals(2, path.size());
 
 		int index = 0;
 		{
-			Edge edge = path.get(index++);
+			Edge edge = path.getEdgeN(index++);
 			assertEquals("a", edge.getSource().getId());
 			assertEquals("b", edge.getTarget().getId());
 		}
 		{
-			Edge edge = path.get(index++);
+			Edge edge = path.getEdgeN(index++);
 			assertEquals("b", edge.getSource().getId());
 			assertEquals("c", edge.getTarget().getId());
 		}

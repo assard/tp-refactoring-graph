@@ -26,10 +26,9 @@ public class Vertex {
 	 */
 	private Coordinate coordinate;
 	
-	@JsonIgnore
+	
 	private List<Edge> inEdges;
 	
-	@JsonIgnore
 	private List<Edge> outEdges;
 
 	/**
@@ -91,10 +90,12 @@ public class Vertex {
 		this.visited = visited;
 	}
 	
+	@JsonIgnore
 	public Collection<Edge> getInEdges(){
 		return this.inEdges;
 	}
 	
+	@JsonIgnore
 	public Collection<Edge> getOutEdges(){
 		return this.outEdges;
 	}

@@ -1,11 +1,9 @@
 package org.acme.graph.cli;
 
 import java.io.File;
-import java.util.List;
-
 import org.acme.graph.io.GraphReader;
-import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
+import org.acme.graph.model.Path;
 import org.acme.graph.model.Vertex;
 import org.acme.graph.routing.DijkstraPathFinder;
 
@@ -44,14 +42,13 @@ public class FindPath {
 		}
 
 		DijkstraPathFinder pathFinder = new DijkstraPathFinder(graph);
-		List<Edge> pathEdges = pathFinder.findPath(source, target);
-		if (pathEdges == null) {
+		Path pathEdges = pathFinder.findPath(source, target);
+		if (pathEdges.isEmpty()) {
 			System.err.println("path not found");
-			return;
 		}
-		System.out.println("Chemin trouvé : ");
-		for (Edge pathEdge : pathEdges) {
-			System.out.println(pathEdge.getSource().getId() + " -> " + pathEdge.getTarget().getId());
+		else {
+			System.out.println("Chemin trouvé : ");
 		}
+		System.out.println(pathEdges.toString());
 	}
 }
