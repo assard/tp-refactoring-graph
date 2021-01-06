@@ -1,5 +1,14 @@
 package org.acme.graph.model;
 
+import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+
 /**
  * 
  * Un arc matérialisé par un sommet source et un sommet cible
@@ -22,6 +31,8 @@ public class Edge {
 	 * Sommet final
 	 */
 	private Vertex target;
+	
+	private LineString geometry;
 
 	public Edge(Vertex source, Vertex target){
 		if(source == null || target == null) {
@@ -32,6 +43,11 @@ public class Edge {
 		this.target = target;
 		source.getOutEdges().add(this);
 		target.getInEdges().add(this);
+		Coordinate[] coords= new Coordinate[2];
+		coords[0] = source.getCoordinate();
+		coords[1] = target.getCoordinate();
+		GeometryFactory geoFactory = new GeometryFactory();
+		this.geometry =  geoFactory.createLineString(coords);
 	}
 
 	public String getId() {
@@ -41,11 +57,22 @@ public class Edge {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
+	
+	@JsonIdentityInfo(
+        generator=ObjectIdGenerators.PropertyGenerator.class, 
+        property="id"
+    )
+    @JsonIdentityReference(alwaysAsId=true)
 	public Vertex getSource() {
 		return source;
 	}
-
+	
+	@JsonIdentityInfo(
+	    generator=ObjectIdGenerators.PropertyGenerator.class, 
+	    property="id"
+	)
+	@JsonIdentityReference(alwaysAsId=true)
 	public Vertex getTarget() {
 		return target;
 	}
@@ -56,12 +83,21 @@ public class Edge {
 	 * @return
 	 */
 	public double getCost() {
-		return source.getCoordinate().distance(target.getCoordinate());
+		return geometry.getLength();
 	}
 
 	@Override
 	public String toString() {
 		return id + " (" + source + "->" + target + ")";
+	}
+	
+	@JsonSerialize(using = GeometrySerializer.class)
+	public LineString getGeometry() {
+		return this.geometry;
+	}
+	
+	public void setGeometry(LineString geometry) {
+		this.geometry = geometry;
 	}
 
 }
