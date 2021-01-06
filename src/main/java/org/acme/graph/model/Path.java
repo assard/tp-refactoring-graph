@@ -1,6 +1,7 @@
 package org.acme.graph.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class Path {
 	
 	public Edge getEdgeN(int n) {
 		return this.edges.get(n);
+	}
+	
+	public Collection<Edge> getEdges(){
+		return this.edges;
 	}
 
 }
