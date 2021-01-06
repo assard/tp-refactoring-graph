@@ -41,7 +41,7 @@ public class DijkstraRegressTest {
 	@Test
 	public void testBANotFound() {
 		Path path = finder.findPath(graph.findVertex("b"), graph.findVertex("a"));
-		assertNull(path);
+		assertEquals(0,path.size());
 	}
 
 	@Test

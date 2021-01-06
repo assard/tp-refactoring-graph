@@ -40,7 +40,7 @@ public class DijkstraPathFinder {
 			visit(current);
 			if (destination.getReachingEdge() != null) {
 				log.info("findPath({},{}) : path found",origin,destination);
-				path = buildPath(destination,path);
+				return buildPath(destination,path);
 			}
 		}
 		log.info("findPath({},{}) : path not found",origin,destination);

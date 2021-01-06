@@ -27,7 +27,7 @@ public class Path {
 	public String toString() {
 		String str = "";
 		for(Edge edge : this.edges) {
-			str += edge.getSource().getId() + " -> " + edge.getTarget().getId();
+			str += edge.getSource().getId() + " -> " + edge.getTarget().getId() + "\n";
 		}
 		return str;
 	}
