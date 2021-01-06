@@ -43,11 +43,11 @@ public class Edge {
 		this.target = target;
 		source.getOutEdges().add(this);
 		target.getInEdges().add(this);
-		Coordinate[] coords= new Coordinate[2];
-		coords[0] = source.getCoordinate();
-		coords[1] = target.getCoordinate();
-		GeometryFactory geoFactory = new GeometryFactory();
-		this.geometry =  geoFactory.createLineString(coords);
+		GeometryFactory gf = new GeometryFactory();
+        this.geometry = (LineString)gf.createLineString(new Coordinate[] {
+            getSource().getCoordinate(),
+            getTarget().getCoordinate()
+        });
 	}
 
 	public String getId() {
