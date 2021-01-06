@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
 import org.acme.graph.model.Vertex;
 import org.geotools.data.DataStore;
@@ -59,10 +60,12 @@ public class ShpGraphReader {
 				Vertex target = getOrCreateVertex(graph, geometry.getEndPoint().getCoordinate());
 
 				/* Création de l'arc pour le parcours en sens direct */
-				graph.createEdge(source, target, id + "-direct");
+				Edge directEdge = graph.createEdge(source, target, id + "-direct");
+				directEdge.setGeometry(geometry);
 
 				/* Création de l'arc pour le parcours en sens opposé */
-				graph.createEdge(source, target, id + "-reverse");
+				Edge reverseEdge = graph.createEdge(source, target, id + "-reverse");
+				reverseEdge.setGeometry((LineString)geometry.reverse());
 			}
 		}
 		return graph;
