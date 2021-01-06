@@ -56,12 +56,11 @@ public class DijkstraPathFinder {
 	 */
 	private void visit(Vertex vertex) {
 		log.trace("visit({})", vertex);
-		List<Edge> outEdges = findOutEdges(vertex);
 		/*
 		 * On étudie chacun des arcs sortant pour atteindre de nouveaux sommets ou
 		 * mettre à jour des sommets déjà atteint si on trouve un meilleur coût
 		 */
-		for (Edge outEdge : outEdges) {
+		for (Edge outEdge : vertex.getOutEdges()) {
 			Vertex reachedVertex = outEdge.getTarget();
 			/*
 			 * Convervation de arc permettant d'atteindre le sommet avec un meilleur coût
@@ -77,23 +76,6 @@ public class DijkstraPathFinder {
 		 * On marque le sommet comme visité
 		 */
 		vertex.setVisited(true);
-	}
-
-	/**
-	 * Recherche des arcs sortant d'un sommet
-	 * 
-	 * @param vertex
-	 * @return
-	 */
-	private List<Edge> findOutEdges(Vertex vertex) {
-		List<Edge> result = new ArrayList<Edge>();
-		for (Edge candidate : graph.getEdges()) {
-			if (candidate.getSource() != vertex) {
-				continue;
-			}
-			result.add(candidate);
-		}
-		return result;
 	}
 
 	/**
